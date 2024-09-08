@@ -9,7 +9,7 @@ const useMessages = () => {
   const [guid, setGuid] = useState("");
   const [showModal, setShowModal] = useState(true);
   const messagesContainer = document.getElementById("messages");
-
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
   ws.onopen = () => {
     console.log("Connected to websocket server");
     setGuid(Math.random().toString(36).substring(2, 15));
@@ -57,6 +57,7 @@ const useMessages = () => {
       );
       // console.log("Message created:", newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
+      resetScroll();
     } catch (error) {
       console.error("Failed to create message:", error);
     }
@@ -68,6 +69,7 @@ const useMessages = () => {
       setMessages((prevMessages) =>
         prevMessages.filter((message) => message.id !== id)
       );
+      getMessages();
     } catch (error) {
       console.error("Failed to delete message:", error);
     }
@@ -98,7 +100,7 @@ const useMessages = () => {
   };
 
   const resetScroll = () => {
-    if (messagesContainer) {
+    if (messagesContainer && !isUserScrolling) {
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
   };
