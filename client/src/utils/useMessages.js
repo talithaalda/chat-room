@@ -30,12 +30,14 @@ const useMessages = () => {
     if (data.type === "ping") return;
     if (data.type === "welcome") return;
     if (data.type === "confirm_subscription") return;
-
-    const message = data.message;
-    setMessagesAndScrollDown([...messages, message]);
+    if (data.message.type === "delete_confirmation") {
+      getMessages();
+    } else {
+      const message = data.message;
+      console.log(message);
+      setMessagesAndScrollDown([...messages, message]);
+    }
   };
-
-  // return () => ws.close(); // Clean up the WebSocket connection on component unmount
 
   const getMessages = async () => {
     try {
@@ -69,7 +71,6 @@ const useMessages = () => {
       setMessages((prevMessages) =>
         prevMessages.filter((message) => message.id !== id)
       );
-      getMessages();
     } catch (error) {
       console.error("Failed to delete message:", error);
     }

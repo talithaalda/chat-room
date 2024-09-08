@@ -32,9 +32,18 @@ class MessagesController < ApplicationController
     end
   end
 
-  # DELETE /messages/1
-  def destroy
-    @message.destroy!
+   # DELETE /messages/1
+   def destroy
+    @message = Message.find(params[:id])
+    if @message.destroy
+      ActionCable.server.broadcast("MessagesChannel", {
+        type: "delete_confirmation",
+        messageId: @message.id
+      })
+      head :no_content
+    else
+      render json: { error: "Failed to delete message" }, status: :unprocessable_entity
+    end
   end
 
   private
