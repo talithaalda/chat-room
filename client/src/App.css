@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App {
+  height: 100vh;
+  width: 100%;
+}
+
+#root {
+  height: 100vh;
+  width: 100%;
+}
+
+.messages {
+  height: 60%;
+  overflow-y: scroll;
+  padding: 0 20px;
+
+  margin: 10% auto 0 auto;
+  width: 80%;
+}
+
+.messageForm {
+  height: 10%;
+  width: 100%;
+}
+
+.messageInput {
+  height: 40px;
+  width: 90%;
+}
+.messageButton {
+  height: 46px;
+  width: 10%;
+  border: 2px solid #4caf50;
+  padding: 1px 2px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.messageHeader {
+  height: 10%;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: lightblue;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal-content input {
+  margin: 10px 0;
+  background-color: gray;
+}
+
+.modal-content button {
+  background-color: #007bff;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+.message-left {
+  text-align: left;
+  background-color: yellow;
+  color: black;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: 60%;
+  align-self: flex-start; /* Untuk menampilkan di sebelah kiri */
+}
+
+.message-right {
+  text-align: right;
+  background-color: pink;
+  color: black;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: 60%;
+  align-self: flex-end; /* Untuk menampilkan di sebelah kanan */
+}
