@@ -10,6 +10,7 @@ const useMessages = () => {
   const [showModal, setShowModal] = useState(true);
   const messagesContainer = document.getElementById("messages");
   const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [userUpdated, setUserUpdated] = useState(false);
   ws.onopen = () => {
     console.log("Connected to websocket server");
     setGuid(Math.random().toString(36).substring(2, 15));
@@ -83,11 +84,10 @@ const useMessages = () => {
 
     try {
       const newUser = await submitUser(name);
-      // setUserId(newUser.id);
       setUser((prevUser) => [...prevUser, newUser]);
-      console.log("User created:", newUser.id);
       localStorage.setItem("userId", newUser.id);
       localStorage.setItem("userName", name);
+      setUserUpdated(true);
     } catch (error) {
       console.error("Failed to create user:", error);
     }
@@ -111,6 +111,7 @@ const useMessages = () => {
     user,
     handleSubmit,
     handleDelete,
+    userUpdated,
     handleUsernameSubmit,
     showModal,
     getMessages,

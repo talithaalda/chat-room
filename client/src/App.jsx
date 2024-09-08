@@ -12,9 +12,11 @@ function App() {
     setShowModal,
     resetScroll,
     getMessages,
+    userUpdated,
   } = useMessages();
   const [currentUserId, setCurrentUserId] = useState(null);
   const [initialLoad, setInitialLoad] = useState(true);
+
   useEffect(() => {
     if (initialLoad) {
       getMessages().then(() => setInitialLoad(false));
@@ -28,13 +30,14 @@ function App() {
   useEffect(() => {
     let userName = localStorage.getItem("userName");
     let userId = localStorage.getItem("userId");
+    console.log(userName, userId);
     setCurrentUserId(userId);
     if (userName) {
       setShowModal(false);
     } else {
       setShowModal(true);
     }
-  }, []);
+  }, [userUpdated]);
   return (
     <div className="App">
       {showModal && (
