@@ -15,7 +15,6 @@ function App() {
     userUpdated,
     setDeleteOpen,
     deleteOpen,
-    errorMessage,
   } = useMessages();
   const [currentUserId, setCurrentUserId] = useState(null);
   const [initialLoad, setInitialLoad] = useState(true);
@@ -85,25 +84,13 @@ function App() {
           <h1 className="messageTitle">Let&apos;s Chat</h1>
           <p className="messageDescription">Talk freely, share openly.</p>
         </div>
-        {errorMessage && (
-          <div
-            role="alert"
-            className="alert alert-error shadow-lg w-80 mx-auto my-2"
-            style={{ maxWidth: "500px" }}
-          >
-            <span>{errorMessage}</span>
-          </div>
-        )}
         <div className="messagesLayout flex flex-col gap-4 " id="messages">
           {messages.map((message) =>
             message.user && message.user.id ? (
               <>
-                <div
-                  className="messages"
-                  onContextMenu={(e) => handleContextMenu(e, message.id)}
-                >
+                <div className="messages">
                   <div
-                    className={`${
+                    className={` ${
                       message.user.id == currentUserId
                         ? "messageUser-right"
                         : "messageUser-left"
@@ -112,12 +99,13 @@ function App() {
                     <b>{message.user.name}</b>
                   </div>
                   <div
-                    className={`${
+                    className={`cursor-pointer ${
                       message.user.id == currentUserId
                         ? "message-right"
                         : "message-left"
                     }`}
                     key={message.id}
+                    onContextMenu={(e) => handleContextMenu(e, message.id)}
                   >
                     <div className="flex gap-2 items-center">
                       <p>{message.body}</p>

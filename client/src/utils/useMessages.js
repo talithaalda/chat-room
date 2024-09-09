@@ -12,7 +12,6 @@ const useMessages = () => {
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [userUpdated, setUserUpdated] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   ws.onopen = () => {
     console.log("Connected to websocket server");
     setGuid(Math.random().toString(36).substring(2, 15));
@@ -54,11 +53,6 @@ const useMessages = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const body = e.target.message.value;
-    if (!body) {
-      setErrorMessage("Message cannot be empty!");
-      return;
-    }
-
     e.target.message.value = "";
     try {
       const newMessage = await submitMessage(
@@ -127,7 +121,6 @@ const useMessages = () => {
     setShowModal,
     setDeleteOpen,
     deleteOpen,
-    errorMessage,
   };
 };
 

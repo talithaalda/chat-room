@@ -26,11 +26,6 @@
   background-color: var(--background-color);
   height: 100vh;
 }
-/* #root {
-  height: 100vh;
-  width: 100%;
-} */
-
 .messageHeader {
   background-color: var(--primary-color);
   border-radius: 0px 0px 30px 30px;
@@ -113,8 +108,8 @@
   padding: 12px 18px;
   border-radius: 15px 15px 15px 15px;
   font-size: 18px;
-  max-width: 60%;
-  align-self: flex-end; /* Untuk menampilkan di sebelah kanan */
+  flex-wrap: wrap;
+  align-self: flex-end;
 }
 .message-right ::before {
   content: "";
@@ -123,10 +118,10 @@
   right: 0px;
   border-top: 30px solid transparent;
   border-right: 35px solid var(--secondary-color);
-  border-top-right-radius: 6px; /* Ubah ke border-right */
+  border-top-right-radius: 6px;
 }
 .messageUser-right {
-  color: var(--text-left-color); /* Warna teks untuk nama pengirim */
+  color: var(--text-left-color);
   font-size: 12px;
   margin-bottom: 4px;
   text-align: right;
@@ -142,7 +137,7 @@
   border-radius: 15px 15px 15px 15px;
   font-size: 18px;
   max-width: 60%;
-  align-self: flex-start; /* Untuk menampilkan di sebelah kanan */
+  line-break: anywhere;
 }
 .message-left ::before {
   content: "";
@@ -151,16 +146,17 @@
   left: 0px;
   border-bottom: 30px solid var(--primary-color);
   border-right: 35px solid transparent;
-  border-top-right-radius: 6px; /* Ubah ke border-right */
+  border-top-right-radius: 6px;
 }
 .messageUser-left {
-  color: var(--text-left-color); /* Warna teks untuk nama pengirim */
+  color: var(--text-left-color);
   font-size: 12px;
   margin-bottom: 4px;
   text-align: left;
   padding-left: 20px;
   font-weight: bold;
   font-size: 14px;
+  line-break: anywhere;
 }
 
 .messageForm {
@@ -173,7 +169,6 @@
   position: fixed;
   bottom: 20px;
   background-color: var(--background-color);
-  /* border-radius: 30px 30px 0px 0px; */
   padding: 10px 20px;
 }
 
@@ -182,14 +177,14 @@
   width: 80vw;
   border-radius: 30px;
   padding: 0 30px;
-  border: 2px solid transparent; /* Warna border default */
-  outline: none; /* Menghilangkan outline default pada elemen input */
-  transition: border-color 0.3s; /* Transisi halus untuk perubahan warna border */
+  border: 2px solid transparent;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
 .messageInput:focus {
-  border-color: var(--secondary-color); /* Ganti dengan warna saat fokus */
-  background-color: #f0f0f0; /* Ganti dengan warna latar belakang saat fokus jika diinginkan */
+  border-color: var(--secondary-color);
+  background-color: #f0f0f0;
 }
 .messageButton {
   height: 46px;
@@ -207,5 +202,5 @@
 }
 
 button:hover .button-send {
-  color: #6e4eb8; /* Ganti warna ikon saat hover */
+  color: #6e4eb8;
 }
