@@ -6,16 +6,22 @@
 }
 .messageContainer[data-theme="light"] {
   --background-color: #ddd5f9;
-  --primary-color: #ffffff;
+  --primary-color-rgb: 255, 255, 255;
+  --primary-color: #ffff;
   --text-left-color: #535353;
   --secondary-color: #8b5afa;
+  --secondary-left-color-hover: #F5F5F5;
+  --secondary-right-color-hover: #6c43d4;
   --text-color: #000000;
 }
 .messageContainer[data-theme="dark"] {
   --background-color: #28282a;
-  --primary-color: #535353;
+  --primary-color-rgb: 83, 83, 83;
+  --primary-color: 535353
   --text-left-color: #ffffff;
   --secondary-color: #8b5afa;
+  --secondary-right-color-hover: #6c43d4;
+  --secondary-left-color-hover: #414040;
   --text-color: #ffffff;
 }
 .App {
@@ -27,9 +33,9 @@
   height: 100vh;
 }
 .messageHeader {
-  background-color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.4);
   border-radius: 0px 0px 30px 30px;
-  height: 13%;
+  padding: 20px;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -39,50 +45,12 @@
 
 .messageTitle {
   color: var(--text-color);
-  font-size: 24px;
-  font-weight: bold;
 }
 .messageDescription {
   margin-top: -5px;
   color: var(--text-left-color);
   font-size: 14px;
   font-weight: bold;
-}
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: lightblue;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.modal-content input {
-  margin: 10px 0;
-  background-color: gray;
-}
-
-.modal-content button {
-  background-color: #007bff;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.modal-content button:hover {
-  background-color: #0056b3;
 }
 
 .messagesLayout {
@@ -108,8 +76,9 @@
   padding: 12px 18px;
   border-radius: 15px 15px 15px 15px;
   font-size: 18px;
-  flex-wrap: wrap;
+  max-width: 60%;
   align-self: flex-end;
+  line-break: anywhere;
 }
 .message-right ::before {
   content: "";
@@ -131,13 +100,26 @@
 }
 .message-left {
   color: var(--text-left-color);
-  text-align: right;
+  text-align: left;
   background-color: var(--primary-color);
   padding: 12px 18px;
   border-radius: 15px 15px 15px 15px;
   font-size: 18px;
   max-width: 60%;
+  align-self: flex-start;
   line-break: anywhere;
+}
+.message-right:hover {
+  background-color: var(--secondary-right-color-hover);
+}
+.message-left:hover {
+  background-color: var(--secondary-left-color-hover); 
+}
+.message-right:hover ::before {
+  border-right: 35px solid var(--secondary-right-color-hover);
+}
+.message-left:hover ::before {
+  border-bottom: 30px solid var(--secondary-left-color-hover); 
 }
 .message-left ::before {
   content: "";
@@ -156,7 +138,6 @@
   padding-left: 20px;
   font-weight: bold;
   font-size: 14px;
-  line-break: anywhere;
 }
 
 .messageForm {
@@ -184,23 +165,13 @@
 
 .messageInput:focus {
   border-color: var(--secondary-color);
-  background-color: #f0f0f0;
+  background-color: var(--primary-color);
 }
-.messageButton {
-  height: 46px;
-  width: 10%;
-  border: 2px solid #4caf50;
-  padding: 1px 2px;
-  background-color: #4caf50;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 0px;
-}
+
 .button-send {
   color: var(--secondary-color);
 }
 
 button:hover .button-send {
-  color: #6e4eb8;
+  color: var(--secondary-color-hover);
 }

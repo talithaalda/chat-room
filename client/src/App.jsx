@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import useMessages from "./utils/useMessages";
 import { BsFillSendFill } from "react-icons/bs";
+import { FaToggleOn, FaToggleOff } from "react-icons/fa";
 function App() {
   const {
     messages,
@@ -24,6 +25,10 @@ function App() {
   });
   const dropdownRef = useRef(null);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
   useEffect(() => {
     if (initialLoad) {
       getMessages().then(() => setInitialLoad(false));
@@ -43,8 +48,23 @@ function App() {
       setShowModal(false);
     } else {
       setShowModal(true);
+      console.log("show modal");
     }
   }, [userUpdated]);
+
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    localStorage.setItem("darkMode", newMode); // Simpan ke localStorage
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.setAttribute("data-theme", "dark");
+    } else {
+      document.body.setAttribute("data-theme", "light");
+    }
+  }, [isDarkMode]);
   const handleContextMenu = (event, messageId) => {
     event.preventDefault();
     setSelectedMessageId(messageId);
@@ -67,23 +87,48 @@ function App() {
     };
   }, []);
   return (
-    <div className="App max-w-full">
+    <div className="App ">
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Enter Your Name</h2>
-            <form onSubmit={handleUsernameSubmit}>
-              <input type="text" name="username" required />
-              <button type="submit">Submit</button>
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm mx-auto">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+              Enter Your Name
+            </h2>
+            <form onSubmit={handleUsernameSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="username"
+                required
+                placeholder="Your name"
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+              />
+              <button
+                type="submit"
+                className="w-full bg-[#8b5afa] dark:bg-[#6d28d9] text-white p-2 rounded-md hover:bg-indigo-600 dark:hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>
       )}
-      <div className="messageContainer" data-theme="light">
-        <div className="messageHeader ">
-          <h1 className="messageTitle">Let&apos;s Chat</h1>
+
+      <div
+        className="messageContainer relative"
+        data-theme={isDarkMode ? "dark" : "light"}
+      >
+        <div className="messageHeader bg-base-100 bg-opacity-70 ">
+          <h1 className="messageTitle text-2xl font-semibold">
+            Let&apos;s Chat
+          </h1>
           <p className="messageDescription">Talk freely, share openly.</p>
         </div>
+        <button
+          onClick={toggleDarkMode}
+          className="flex justify-end w-full p-2 absolute top-5 right-10 z-10"
+        >
+          {isDarkMode ? <FaToggleOn size={24} /> : <FaToggleOff size={24} />}
+        </button>
         <div className="messagesLayout flex flex-col gap-4 " id="messages">
           {messages.map((message) =>
             message.user && message.user.id ? (
@@ -105,7 +150,7 @@ function App() {
                         : "message-left"
                     }`}
                     key={message.id}
-                    onContextMenu={(e) => handleContextMenu(e, message.id)}
+                    onClick={(e) => handleContextMenu(e, message.id)}
                   >
                     <div className="flex gap-2 items-center">
                       <p>{message.body}</p>
