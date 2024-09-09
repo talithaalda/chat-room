@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import useMessages from "./utils/useMessages";
-
+import { BsFillSendFill } from "react-icons/bs";
 function App() {
   const {
     messages,
@@ -13,10 +13,18 @@ function App() {
     resetScroll,
     getMessages,
     userUpdated,
+    setDeleteOpen,
+    deleteOpen,
+    errorMessage,
   } = useMessages();
   const [currentUserId, setCurrentUserId] = useState(null);
   const [initialLoad, setInitialLoad] = useState(true);
-
+  const [dropdownPosition, setDropdownPosition] = useState({
+    top: 0,
+    left: 0,
+  });
+  const dropdownRef = useRef(null);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
   useEffect(() => {
     if (initialLoad) {
       getMessages().then(() => setInitialLoad(false));
@@ -38,8 +46,29 @@ function App() {
       setShowModal(true);
     }
   }, [userUpdated]);
+  const handleContextMenu = (event, messageId) => {
+    event.preventDefault();
+    setSelectedMessageId(messageId);
+
+    const { clientX: left, clientY: top } = event;
+    setDropdownPosition({ top, left });
+    setDeleteOpen(true);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDeleteOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <div className="App">
+    <div className="App max-w-full">
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -51,40 +80,86 @@ function App() {
           </div>
         </div>
       )}
-      <div className="messageHeader">
-        <h1>Let&apos;s Chat</h1>
-      </div>
-      <div className="messages flex flex-col gap-2" id="messages">
-        {messages.map((message) =>
-          message.user && message.user.id ? (
-            <div
-              className={`message ${
-                message.user.id == currentUserId
-                  ? "message-right"
-                  : "message-left"
-              }`}
-              key={message.id}
-            >
-              <div className="flex gap-2 items-center">
-                <h2>
-                  <b>{message.user.name}</b>
-                </h2>
-                <p>{message.body}</p>
-                <button onClick={() => handleDelete(message.id)}>Delete</button>
-              </div>
-            </div>
-          ) : (
-            ""
-          )
+      <div className="messageContainer" data-theme="light">
+        <div className="messageHeader ">
+          <h1 className="messageTitle">Let&apos;s Chat</h1>
+          <p className="messageDescription">Talk freely, share openly.</p>
+        </div>
+        {errorMessage && (
+          <div
+            role="alert"
+            className="alert alert-error shadow-lg w-80 mx-auto my-2"
+            style={{ maxWidth: "500px" }}
+          >
+            <span>{errorMessage}</span>
+          </div>
         )}
-      </div>
-      <div className="messageForm">
-        <form onSubmit={handleSubmit}>
-          <input className="messageInput" type="text" name="message" />
-          <button className="messageButton" type="submit">
-            Send
-          </button>
-        </form>
+        <div className="messagesLayout flex flex-col gap-4 " id="messages">
+          {messages.map((message) =>
+            message.user && message.user.id ? (
+              <>
+                <div
+                  className="messages"
+                  onContextMenu={(e) => handleContextMenu(e, message.id)}
+                >
+                  <div
+                    className={`${
+                      message.user.id == currentUserId
+                        ? "messageUser-right"
+                        : "messageUser-left"
+                    }`}
+                  >
+                    <b>{message.user.name}</b>
+                  </div>
+                  <div
+                    className={`${
+                      message.user.id == currentUserId
+                        ? "message-right"
+                        : "message-left"
+                    }`}
+                    key={message.id}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <p>{message.body}</p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )
+          )}
+        </div>
+        <div className="">
+          <form onSubmit={handleSubmit} className="messageForm">
+            <input
+              className="messageInput"
+              type="text"
+              name="message"
+              placeholder="Type a message"
+            />
+            <button className="" type="submit">
+              <BsFillSendFill className="button-send" size={35} />
+            </button>
+          </form>
+        </div>
+        {deleteOpen && (
+          <div
+            className="menu dropdown-content bg-base-100 rounded-box z-[1] w-30 p-2 shadow"
+            style={{
+              top: `${dropdownPosition.top}px`,
+              left: `${dropdownPosition.left}px`,
+              position: "absolute",
+            }}
+            ref={dropdownRef}
+          >
+            <ul>
+              <li>
+                <a onClick={() => handleDelete(selectedMessageId)}>Delete</a>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

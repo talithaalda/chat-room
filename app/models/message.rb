@@ -3,7 +3,7 @@ class Message < ApplicationRecord
   after_create_commit :broadcast_message
 
   private
-
+  validates :body, presence: true
   def broadcast_message
     ActionCable.server.broadcast("MessagesChannel", {
       id: id,

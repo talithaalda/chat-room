@@ -1,52 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+* {
+  font-family: "Roboto", sans-serif !important;
+}
+.messageContainer[data-theme="light"] {
+  --background-color: #ddd5f9;
+  --primary-color: #ffffff;
+  --text-left-color: #535353;
+  --secondary-color: #8b5afa;
+  --text-color: #000000;
+}
+.messageContainer[data-theme="dark"] {
+  --background-color: #28282a;
+  --primary-color: #535353;
+  --text-left-color: #ffffff;
+  --secondary-color: #8b5afa;
+  --text-color: #ffffff;
+}
 .App {
   height: 100vh;
   width: 100%;
 }
-
-#root {
+.messageContainer {
+  background-color: var(--background-color);
+  height: 100vh;
+}
+/* #root {
   height: 100vh;
   width: 100%;
-}
-
-.messages {
-  height: 60%;
-  overflow-y: scroll;
-  padding: 0 20px;
-
-  margin: 10% auto 0 auto;
-  width: 80%;
-}
-
-.messageForm {
-  height: 10%;
-  width: 100%;
-}
-
-.messageInput {
-  height: 40px;
-  width: 90%;
-}
-.messageButton {
-  height: 46px;
-  width: 10%;
-  border: 2px solid #4caf50;
-  padding: 1px 2px;
-  background-color: #4caf50;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 0px;
-}
+} */
 
 .messageHeader {
-  height: 10%;
+  background-color: var(--primary-color);
+  border-radius: 0px 0px 30px 30px;
+  height: 13%;
   width: 100%;
-  text-align: center;
-  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.messageTitle {
+  color: var(--text-color);
+  font-size: 24px;
+  font-weight: bold;
+}
+.messageDescription {
+  margin-top: -5px;
+  color: var(--text-left-color);
+  font-size: 14px;
+  font-weight: bold;
 }
 .modal {
   position: fixed;
@@ -84,22 +89,123 @@
 .modal-content button:hover {
   background-color: #0056b3;
 }
-.message-left {
-  text-align: left;
-  background-color: yellow;
-  color: black;
-  padding: 10px;
-  border-radius: 15px;
-  max-width: 60%;
-  align-self: flex-start; /* Untuk menampilkan di sebelah kiri */
+
+.messagesLayout {
+  height: 62%;
+  overflow-y: scroll;
+  padding: 10px 20px 0px 20px;
+  margin: 5% auto 0 auto;
+  width: 80%;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--secondary-color) !important;
+  scroll-behavior: smooth !important;
 }
 
+.messages {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 .message-right {
+  color: #fff;
   text-align: right;
-  background-color: pink;
-  color: black;
-  padding: 10px;
-  border-radius: 15px;
+  background-color: var(--secondary-color);
+  padding: 12px 18px;
+  border-radius: 15px 15px 15px 15px;
+  font-size: 18px;
   max-width: 60%;
   align-self: flex-end; /* Untuk menampilkan di sebelah kanan */
+}
+.message-right ::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  border-top: 30px solid transparent;
+  border-right: 35px solid var(--secondary-color);
+  border-top-right-radius: 6px; /* Ubah ke border-right */
+}
+.messageUser-right {
+  color: var(--text-left-color); /* Warna teks untuk nama pengirim */
+  font-size: 12px;
+  margin-bottom: 4px;
+  text-align: right;
+  padding-right: 20px;
+  font-weight: bold;
+  font-size: 14px;
+}
+.message-left {
+  color: var(--text-left-color);
+  text-align: right;
+  background-color: var(--primary-color);
+  padding: 12px 18px;
+  border-radius: 15px 15px 15px 15px;
+  font-size: 18px;
+  max-width: 60%;
+  align-self: flex-start; /* Untuk menampilkan di sebelah kanan */
+}
+.message-left ::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  border-bottom: 30px solid var(--primary-color);
+  border-right: 35px solid transparent;
+  border-top-right-radius: 6px; /* Ubah ke border-right */
+}
+.messageUser-left {
+  color: var(--text-left-color); /* Warna teks untuk nama pengirim */
+  font-size: 12px;
+  margin-bottom: 4px;
+  text-align: left;
+  padding-left: 20px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.messageForm {
+  height: 10%;
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  background-color: var(--background-color);
+  /* border-radius: 30px 30px 0px 0px; */
+  padding: 10px 20px;
+}
+
+.messageInput {
+  height: 50px;
+  width: 80vw;
+  border-radius: 30px;
+  padding: 0 30px;
+  border: 2px solid transparent; /* Warna border default */
+  outline: none; /* Menghilangkan outline default pada elemen input */
+  transition: border-color 0.3s; /* Transisi halus untuk perubahan warna border */
+}
+
+.messageInput:focus {
+  border-color: var(--secondary-color); /* Ganti dengan warna saat fokus */
+  background-color: #f0f0f0; /* Ganti dengan warna latar belakang saat fokus jika diinginkan */
+}
+.messageButton {
+  height: 46px;
+  width: 10%;
+  border: 2px solid #4caf50;
+  padding: 1px 2px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 0px;
+}
+.button-send {
+  color: var(--secondary-color);
+}
+
+button:hover .button-send {
+  color: #6e4eb8; /* Ganti warna ikon saat hover */
 }
