@@ -7,17 +7,17 @@
 .messageContainer[data-theme="light"] {
   --background-color: #ddd5f9;
   --primary-color-rgb: 255, 255, 255;
-  --primary-color: #ffff;
+  --primary-color: #fff6f6;
   --text-left-color: #535353;
   --secondary-color: #8b5afa;
-  --secondary-left-color-hover: #F5F5F5;
+  --secondary-left-color-hover: #f5f5f5;
   --secondary-right-color-hover: #6c43d4;
   --text-color: #000000;
 }
 .messageContainer[data-theme="dark"] {
   --background-color: #28282a;
   --primary-color-rgb: 83, 83, 83;
-  --primary-color: 535353
+  --primary-color: #535353;
   --text-left-color: #ffffff;
   --secondary-color: #8b5afa;
   --secondary-right-color-hover: #6c43d4;
@@ -113,13 +113,13 @@
   background-color: var(--secondary-right-color-hover);
 }
 .message-left:hover {
-  background-color: var(--secondary-left-color-hover); 
+  background-color: var(--secondary-left-color-hover);
 }
 .message-right:hover ::before {
   border-right: 35px solid var(--secondary-right-color-hover);
 }
 .message-left:hover ::before {
-  border-bottom: 30px solid var(--secondary-left-color-hover); 
+  border-bottom: 30px solid var(--secondary-left-color-hover);
 }
 .message-left ::before {
   content: "";
