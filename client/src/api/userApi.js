@@ -1,10 +1,13 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
+console.log("API URL:", API_URL);
 export const fetchUsers = async () => {
-  const response = await fetch("http://localhost:3000/users");
+  const response = await fetch(`${API_URL}/users`);
   const data = await response.json();
   return data;
 };
 export const submitUser = async (name) => {
-  const response = await fetch("http://localhost:3000/users", {
+  const response = await fetch(`${API_URL}/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

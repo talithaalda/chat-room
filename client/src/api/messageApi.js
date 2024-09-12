@@ -1,10 +1,13 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
+console.log("API URL:", API_URL);
 export const fetchMessages = async () => {
-  const response = await fetch("http://localhost:3000/messages");
+  const response = await fetch(`${API_URL}/messages`);
   const data = await response.json();
   return data;
 };
 export const submitMessage = async (body, userId) => {
-  const response = await fetch("http://localhost:3000/messages", {
+  const response = await fetch(`${API_URL}/messages`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -23,7 +26,7 @@ export const submitMessage = async (body, userId) => {
 export const deleteMessage = async (messageId) => {
   // if (!window.confirm("Are you sure you want to delete this message?"))
   //   return;
-  const response = await fetch(`http://localhost:3000/messages/${messageId}`, {
+  const response = await fetch(`${API_URL}/messages/${messageId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

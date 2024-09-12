@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { fetchMessages, submitMessage, deleteMessage } from "../api/messageApi"; // Ensure correct import
 import { submitUser } from "../api/userApi";
+
 const ws = new WebSocket("ws://localhost:3000/cable");
+
 const useMessages = () => {
   const [messages, setMessages] = useState([]);
   const [user, setUser] = useState([]);
