@@ -89,18 +89,19 @@ function App() {
   return (
     <div className="App ">
       {showModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm mx-auto">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-              Enter Your Name
-            </h2>
+        <div
+          className="modal-overlay"
+          data-theme={isDarkMode ? "dark" : "light"}
+        >
+          <div className="modal-content">
+            <h2 className="modal-title">Enter Your Name</h2>
             <form onSubmit={handleUsernameSubmit} className="space-y-4">
               <input
                 type="text"
                 name="username"
                 required
                 placeholder="Your name"
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+                className="modal-input"
               />
               <button
                 type="submit"
@@ -144,16 +145,31 @@ function App() {
                     <b>{message.user.name}</b>
                   </div>
                   <div
-                    className={`cursor-pointer ${
+                    className={` ${
                       message.user.id == currentUserId
-                        ? "message-right"
-                        : "message-left"
+                        ? "date-right"
+                        : "date-left"
                     }`}
-                    key={message.id}
-                    onClick={(e) => handleContextMenu(e, message.id)}
                   >
-                    <div className="flex gap-2 items-center">
-                      <p>{message.body}</p>
+                    <span className="text-gray-500 text-xs ml-2">
+                      {new Date(message.created_at).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </span>
+                    <div
+                      className={`cursor-pointer ${
+                        message.user.id == currentUserId
+                          ? "message-right"
+                          : "message-left"
+                      }`}
+                      key={message.id}
+                      onClick={(e) => handleContextMenu(e, message.id)}
+                    >
+                      <div className="flex gap-2 items-center">
+                        <p>{message.body}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

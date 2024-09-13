@@ -24,6 +24,20 @@
   --secondary-left-color-hover: #414040;
   --text-color: #ffffff;
 }
+.modal-overlay[data-theme="light"] {
+  --modal-background: #fff;
+  --modal-title-color: #6d28d9;
+  --input-bg: white;
+  --input-text: #111827;
+  --input-border: #d1d5db;
+}
+.modal-overlay[data-theme="dark"] {
+  --modal-background: #2d3748;
+  --modal-title-color: #ded9ca;
+  --input-bg: #374151;
+  --input-text: #ffffff;
+  --input-border: #4b5563;
+}
 .App {
   height: 100vh;
   width: 100%;
@@ -174,4 +188,60 @@
 
 button:hover .button-send {
   color: var(--secondary-color-hover);
+}
+.modal-overlay {
+  position: fixed; /* fixed */
+  top: 0; /* inset-0 (top, right, bottom, left are 0) */
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(75, 85, 99, 0.5);
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  justify-content: center; /* justify-center */
+  z-index: 50; /* z-50 */
+}
+.modal-content {
+  background-color: var(--modal-background); /* bg-white */
+  padding: 1.5rem; /* p-6 */
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  max-width: 24rem; /* max-w-sm (384px) */
+  margin: 0 auto; /* mx-auto */
+}
+.modal-title {
+  font-size: 1.5rem; /* text-2xl (24px) */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 1rem; /* mb-4 */
+  color: var(--modal-title-color); /* text-gray-900 */
+}
+.modal-input {
+  width: 100%; /* w-full */
+  padding: 0.5rem; /* p-2 */
+  border: 1px solid var(--input-border); /* border border-gray-300 */
+  border-radius: 0.375rem; /* rounded-md */
+  outline: none; /* focus:outline-none */
+  background-color: var(--input-bg); /* bg-gray-50 */
+  color: var(--input-text); /* text-gray-900 */
+}
+
+.modal-input:focus {
+  box-shadow: 0 0 0 2px #6366f1; /* focus:ring-2 focus:ring-indigo-500 */
+}
+.date-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--text-right-color);
+  gap: 10px;
+}
+.date-left {
+  display: flex;
+  flex-direction: row;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--text-right-color);
+  gap: 6px;
 }

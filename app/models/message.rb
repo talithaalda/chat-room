@@ -8,6 +8,7 @@ class Message < ApplicationRecord
     ActionCable.server.broadcast("MessagesChannel", {
       id: id,
       body: body,
+      created_at: created_at,
       user: {
         id: user.id,
         name: user.name
